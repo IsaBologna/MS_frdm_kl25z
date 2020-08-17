@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>FRDM KL25Z no Arm Mbed Studio</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="icon" href="img/favicon.ico">
+</head>
+
+<body>
+
+    <header id="cabecalho">
+        <img src="img\embedded.png" alt="embedded-logo" class="logo">
+        <h1 class="header">FRDM-KL25Z e Arm Mbed Studio</h1>
+        <!-- <p>Desenvolvimento com a FRDM-KL25Z no Arm Mbed Studio</p> -->
+    </header>
+
+    <div id="indice">
+        <a href="#cabecalho" class="indice-item">Conteúdo</a>
+        <ul>
+            <li><a href="#️projeto" class="indice-item">Projeto</a></li>
+            <li><a href="#mbed-studio" class="indice-item">Arm Mbed Studio</a></li>
+            <li><a href="#frdm" class="indice-item">FRDM-KL25Z</a></li>
+            <ul>
+                <li><a href="#fw-update" class="indice-item">Atualização do Firmware</a></li>
+                <li><a href="#fw-update" class="indice-item">Probelmas comuns</a></li>
+            </ul>
+            <li><a href="#desenvolvimento" class="indice-item">Desenvolvimento</a></li>
+        </ul>
+    </div>
+
+    <div id="conteudo">
+        <div id="projeto" class="content">
+            <h2>Projeto</h2>
+            <p>O projeto desenvolvido aqui é uma comunicação entre duas placas ARM usando módulos NRF24L01+.</p>
+            <p>Podem ser usadas quaisquer placas, nesse caso usei a FRDM-KL25Z e a NUCLEO-F411RE. </p>
+            <figure>
+                <img src="img\montagem_frdm_nucleo_bb.png" alt="montagem-projeto">
+                <figcaption>
+                    <p>Montagem das placas de desenvolvimento com o módulo NRF24L01+ no software Fritzing</p>
+                </figcaption>
+            </figure>
+        </div>
+
+        <div id="mbed-studio" class="content">
+            <h2>Arm Mbed Studio (MS)</h2>
+            <p>Arm Mbed Studio's
+                <a href="https://os.mbed.com/docs/mbed-studio/current/introduction/index.html">documentation</a>
+            </p>
+
+            <h3>Placas disponíveis</h3>
+            <p> Existem centenas de placas compatíveis com o MS, e podem ser vistas
+                <a
+                    href="https://os.mbed.com/platforms/?q=&Mbed+Studio+support=Build+and+run&Mbed+Studio+support=Debug">aqui</a>.
+            </p>
+            <p> Eu escolhi usar a <a href="https://os.mbed.com/platforms/KL25Z/">FRDM-KL25Z</a>, mas o desenvolvimento pode ser replicado para outras placas. É possível utilizar o MS para um projeto próprio, sem utilizar os kits de desenvolvimento. </p>
+
+            <h3>Mbed OS 5/6</h3>
+            <a href="https://os.mbed.com/docs/mbed-os/v6.2/introduction/index.html">Documentation for OS 6</a>
+            <a href="https://os.mbed.com/docs/mbed-os/v6.2/apis/index.html">API Reference</a>
+        </div>
+
+        <div id="frdm" class="content">
+            <h2>FRDM KL25Z</h2>
+            <img src="img\pinout_frdm.png" alt="pinout-frdm">
+            
+            <div id="fw-update">
+
+                <h3>Atualização do firmware</h3>
+                <p> Para que a placa seja identificada pelo MS, é preciso que o firmware de bootloader seja atualizado.</p>
+                
+                <p>Atualizando pelo <a href="https://os.mbed.com/handbook/Firmware-FRDM-KL25Z">link no site do mbed</a> o MS indicava um erro de "firmware desatualizado". Mas parece que funciona</p>
+                <!-- TODO teste de blinky com firmware desatualizado -->
+                
+                <h4>OpenSDA</h4>
+                <p>SDA é uma sigla para <i>Serial and Debug Adapter</i></p>
+                <p><a
+                    href="https://www.nxp.com/design/microcontrollers-developer-resources/ides-for-kinetis-mcus/opensda-serial-and-debug-adapter:OPENSDA">OpenSDA</a>
+                    trata-se de um conjunto de hardware e firmware da NXP que serve como auxiliar para o desenvolvimento em um microcontrolador alvo, presente em kits de desenvolvimento e gravadores com microcontroladores da ARM.
+                </p>
+                <p>O bootloader, rodando no microcontrolador auxiliar, serve como interface entre o computador e o
+                    microcontroaldor principal. Adapta o protocolo USB, usado para programar ou debugar o microcontrolador principal, e para estabelecer uma comunicação Serial (escrita e leitura). Além disso, ele cria um diretório virtual, facilitando o processo de gravação (<i>flash</i>).</p>
+                    <figure>
+                        <img src="img\OPENSDA-BD.jpg" alt="Block Diagram">
+                        <figcaption>
+                            <p>O diagrama de blocos dessa interface</p>
+                        </figcaption>
+                    </figure>
+                    
+                <p>A versão mais recente desse bootloader, DAPLink, equivale a versão OpenSDAv2.2. 
+                    A versão <i>default</i> (V1) é a P&EMicro.</p>
+                    
+                    <figure>
+                        <img src="img\compare_opensda.PNG" alt="comparision table">
+                        <figcaption>Tabela comparativa entre as versões do OpenSDA</figcaption>
+                    </figure>
+                    
+                <h4>How to</h4>
+                <p> Depois de ler algumas coisas na
+                    <a href="https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/zephyr/boards/arm/frdm_kl25z/doc/index.html">documentação do Zephyr</a>, 
+                    atualizei para a versão mais recente do <strong>OpenSDA DAPLink Firmware</strong>, cujo arquivo pode ser baixado diretamente <a href="bin\k20dx_frdmkl25z_if_crc.bin">aqui</a>.
+                </p>
+                
+                <p>O binário para voltar a versão do firmware OpenSDA PEMicro pode ser baixado 
+                    <a href="bin\MSD-DEBUG-FRDM-KL25Z_Pemicro_v118.SDA">aqui</a>. </p>
+                    
+                <p>O processo de atualização do firmware da placa é o mesmo para todos os firmwares.</p>
+                <ol>
+                    <div class="list-item">
+                        <li>Modo Bootloader</li>
+                        <p class="item-description">A placa deve estar no modo bootloader, para isso basta ligar a placa enquanto segura o botão de reset. Ao soltar, o windows deve identificar a placa como BOOTLOADER.</p>
+                        <img src="img\bootloader.PNG" alt="BOOTLOADER (D:)" class="item-img">
+                    </div>
+
+                    <div class="list-item">
+                        <li>Carregar o firmware</li>
+                        <p class="item-description">Arrastar o arquivo .bin/.hex ou salvá-lo diretamente em BOOTLOADER.</p>
+                    </div>
+
+                    <div class="list-item">
+                    <li>Desligar e ligar a placa normalmente</li>
+                    <p class="item-description"> O windows deve identicar a placa como <b>DAPLINK</b>, para o caso do OpenSDA DAPLink Firmware</p>
+                    <img src="img\daplink.PNG" alt="DAPLINK (D:)" class="item-img">
+                    <p>E como FRDM-KL25Z, no caso do PEMicro</p>
+                    </div>
+                </ol>
+            </div>
+
+            <h3>Problemas</h3>
+            <!-- todo -->
+
+            <p>Rodando o DAPLink, o compilador online da mbed funcionou sem problemas, mas o CodeWarrior não.</p>
+            <p>Dentro das configurações de Debug do CodeWarrior há apenas as opções: J-Link, P&E ARM e GDI generic, e por isso o software não consegue identificar automatiamente a placa pela USB.</p>
+
+            <p>Uma terceira opção é usar o J-Link 
+                <a href="https://www.segger.com/products/debug-probes/j-link/models/other-j-links/opensda-sda-v2/">OpenSDA</a>
+                da SEGGER. Não testado!
+            </p>
+            <!-- todo  -->
+        </div>
+
+        <div id="desenvolvimento" class="content">
+            <h2>Desenvolvimento</h2>
+            
+            <h3>Hardware</h3>
+
+            <img src="img\pins_conection.png" alt="conexão" class="hw">
+            <img src="img\pinout_nrf.jpg" alt="" class="hw" id="nrf">
+            <img src="img\frdm_nrf_1.jpeg" alt="montagem 1" class="hw">
+            <img src="img\frdm_nrf_2.jpeg" alt="montagem 2" class="hw">
+
+            <h3>Firmware</h3>
+            <p>O projeto que escolhi como base foi o exemplo <i>mbed-os-example-blinky-baremetal</i></p>
+            <p>File > New Program...</p>
+
+            <h3>Library nRF24L01+</h3>
+            <p>Importei a biblioteca 
+                <a href="https://os.mbed.com/users/Owen/code/nRF24L01P/">nRF24L01P by Owen Edwards</a>
+                para o Mbed Studio
+            </p>
+            <p>File > Add Library to Active Program...</p>
+
+
+            <figure>
+                <img src="img\import_lib.JPG" alt="" class="mbed-studio">
+                <img src="img\import_lib_2.JPG" alt="" class="mbed-studio">
+            </figure>
+
+            <p>O <a href="https://os.mbed.com/users/Owen/code/nRF24L01P_Hello_World/">Hello World</a> dessa biblioteca usa uma versão descontinuada do MbedOS (OS 2), e por isso não é compatível com o MS, só com  online e o CLI.
+            </p>
+            <p>Ao importar o exemplo ao Mbed Studio, através de File > Import Program..., há um aviso de que o projeto precisa ser migrado para os OS 5 ou 6. </p>
+            <img src="img\problem_hello_world.JPG" alt="">
+
+            <p>Achei mais simples escrever as mudanças no projeto usando OS 6 do que adatptar o Hello World. </p>
+
+            <h3>New Example (using OS 6.2)</h3>
+            <p>Definição dos pinos a serem usados para se comunicar com o módulo. As possíveis nomenclaturas podem ser vistas em <code>PinNames.h</code> (escolher a placa <i>target</i> antes).</p>
+            <code>
+                <pre>
+    /*** Pins definitions***/
+    #define 	MOSI	PTD2
+    #define 	MISO	PTD3
+    #define 	SCK	PTC5
+    #define 	CS		PTD0
+    #define 	CE		PTD5
+    #define 	IRQ		PTA13
+    
+    /** Module Instance **/
+    nRF24L01P my_nrf24l01p(MOSI, MISO, SCK, CS, CE, IRQ);
+                </pre>
+            </code>
+
+            <h4>Serial</h4>
+            <p>A antiga API de serial está descontinuada, e para adaptar temos 3 opções:</p>
+            <img src="img\deprecated_serial.JPG" alt="">
+
+            <p>Assim, o <code>printf</code> pode ser usado diretamente, sem prefixo. </p>
+            <img src="img\printf.JPG" alt="">
+
+            <p>Para adaptar os demais comandos via UART que são usados para a comunicação, escolhi usar a API
+                <a href="https://os.mbed.com/docs/mbed-os/v6.2/apis/serial-uart-apis.html">Buferred Serial</a>
+            </p>
+            <p> Criamos um objeto <code><pre> static BufferedSerial pc(USBTX, USBRX, 9600);</pre></code> e assim as adaptações ficam: </p>
+            <table>
+                <tr><td><pre>pc.readable()</pre></td><td><pre>pc.readable()</pre></td></tr>
+                <tr><td><pre>txData[txDataCnt++] = getc();</pre></td><td><pre>pc.read(txData,TRANSFER_SIZE); txDataCnt++;</pre></td></tr>
+                <tr><td><pre>pc.putc(rxData[i]);</pre></td><td><pre>printf("%c",rxData[i]);</pre></td></tr>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- todo mbed simulator -->
+    <footer>
+        <hr>
+        <p>Isabella Bologna Salomão - 2020</p>
+        <p>contact-me: isabella.salomao@usp.br</p>
+    </footer>
+</body>
+
+</html>

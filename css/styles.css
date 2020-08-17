@@ -1,0 +1,155 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Lora&effect=outline");
+@font-face {
+    font-family: "FonteCode";
+    src: url("_fonts\computer-font.ttf");
+  }
+
+/*** tag selectors ***/
+
+body {
+    background-color: rgba(31, 122, 122, 0.2);
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    display: block;
+    text-align: justify;
+    margin: 0;
+}
+
+div {
+    background-color: whitesmoke;
+}
+
+header {
+    background-color: rgb(19, 105, 126, 0.8);
+    border-bottom: 5px solid darkslategray;
+    display: inline-table;
+    text-align: center;
+    vertical-align: center;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 100px;
+    width: 100%;
+}
+
+figure {
+    margin: 10px;
+}
+
+img {
+    margin: 0;
+    max-width: 980px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figcaption{
+    text-align:center;
+}
+
+footer {
+    font-size: 12px;
+    /* text-align: center; */
+    display: block;
+    margin: 5px;
+}
+
+pre {
+    padding: 10px;
+    margin: 0;
+    color: #f2f2f2;
+    font-family: 'Fira',sans-serif;
+    font-size: 14px;
+    background-color: #303030!important;
+    border: none;
+    letter-spacing: 1px;
+    /* word-spacing: 2px; */
+}
+
+/*** class selectors - particular elements, group ***/
+a.indice-item {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+h1.header{
+    display: inline-block;
+    width: 600px;
+    vertical-align: -moz-middle-with-baseline;
+    position: absolute;
+    left: 450px; top: 40px;
+    /* margin-top: 0; */
+}
+
+div.content{
+    margin-bottom: 20px;
+    border: solid;
+    border-width: 1px;
+    padding: 20px;
+    width: 1000px;
+}
+
+div.list-item {
+    margin: 10px;
+    align-content:start;
+}
+
+img.logo{
+    width: 200px;
+    float: left ;
+    position: absolute;
+    left: 100px; top: 0;
+    
+}
+
+img.hw {
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    margin: 10px;
+    width: 400px;
+}
+
+img.item-img{
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+}
+
+img.mbed-studio{
+    display: inline-block;
+    max-width: 400px;
+    margin: 20px;
+}
+
+p.item-description {
+    vertical-align: top;
+    display: inline-block;
+    max-width: 500px;
+}
+
+/*** id selectors - single one in a page ***/
+
+div#conteudo{
+    background-color: rgba(31, 122, 122,0);
+    display: inline-block;
+    position: absolute;
+    padding: 10px;
+    border: 0;
+}
+
+div#indice{
+    border: solid;
+    border-width: 1px;
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    height: 500px;
+}
+
+img#nrf{
+    left: -150px;
+}
+
